@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     public Transform gameOverTransform;
 
+    public GameObject mainMenu;
+
     public List<GameObject> targets;
 
     private int score;
@@ -24,7 +26,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitProperties();
     }
 
     // Update is called once per frame
@@ -38,13 +39,15 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void InitProperties()
+    public void StartGame(int difficulty = 1)
     {
         score = 0;
         isGameActive = true;
+        spawnRate /= difficulty;
         StartCoroutine(SpawnTarget());
 
         gameOverTransform.gameObject.SetActive(false);
+        mainMenu.SetActive(false);
     }
 
     public void GameOver()

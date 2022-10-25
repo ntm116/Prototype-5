@@ -6,6 +6,10 @@ public class Target : MonoBehaviour
 {
     private Rigidbody targetRb;
 
+    public int scoreToEarned = 3;
+
+    public ParticleSystem explosionParticle;
+
     public float minForce = 12f;
 
     public float maxForce = 16f;
@@ -17,10 +21,13 @@ public class Target : MonoBehaviour
     public float xRange = 4f;
 
     public float ySpawnPos = -6f;
+
+    private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
         targetRb = GetComponent<Rigidbody>();
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
 
         ShowUp();
     }
@@ -34,6 +41,10 @@ public class Target : MonoBehaviour
     private void OnMouseDown()
     {
         Destroy(gameObject);
+
+        gameManager.UpdateScore(scoreToEarned);
+
+        Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
     }
 
     private void OnTriggerEnter(Collider other)
